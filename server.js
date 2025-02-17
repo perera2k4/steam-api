@@ -20,6 +20,25 @@ async function getSteamGames() {
     }
 }
 
+// Função para obter o número de jogadores online em tempo real
+async function getPlayersOnline(appid) {
+    const PLAYER_COUNT_URL = `https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1?appid=${appid}`;
+    try {
+        const response = await axios.get(PLAYER_COUNT_URL);
+
+        // Verifica se a resposta existe e contém o número de jogadores online
+        if (response.data && response.data.response && response.data.response.player_count !== undefined) {
+            return response.data.response.player_count;
+        } else {
+            console.log(`Não foi possível obter jogadores online para o jogo com appid ${appid}`);
+            return 0; // Retorna 0 caso não tenha a informação de jogadores online
+        }
+    } catch (error) {
+        console.error('Erro ao obter jogadores online:', error);
+        return 0; // Caso haja erro na API, retorna 0
+    }
+}
+
 // Rota para obter os jogos mais jogados
 app.get('/api/jogos', async (req, res) => {
     try {
@@ -36,16 +55,19 @@ app.get('/api/jogos', async (req, res) => {
         // Obtém a lista de jogos (aplicativos) para correlacionar com o ranking
         const listaJogos = await getSteamGames();
 
-        // Combina os dados dos jogos mais jogados com seus nomes
-        const jogosComNomes = jogosMaisJogados.map(jogo => {
+        // Combina os dados dos jogos mais jogados com seus nomes, pico de jogadores e jogadores online
+        const jogosComNomes = await Promise.all(jogosMaisJogados.map(async (jogo) => {
             const jogoDetalhado = listaJogos.find(jogoLista => jogoLista.appid === jogo.appid);
+            const playersOnline = await getPlayersOnline(jogo.appid); // Obtém jogadores online em tempo real
+
             return {
                 rank: jogo.rank,
-                name: jogoDetalhado ? jogoDetalhado.name : 'Nome não encontrado', // Usamos 'name' aqui
-                peak_in_game: jogo.peak_in_game,
+                name: jogoDetalhado ? jogoDetalhado.name : 'Nome não encontrado',
+                peak_in_game: jogo.peak_in_game, // Número de jogadores no pico
+                players_online: playersOnline,  // Número de jogadores online no momento
                 appid: jogo.appid
             };
-        });
+        }));
 
         // Retorna os dados combinados como resposta
         res.json(jogosComNomes);

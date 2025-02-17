@@ -1,9 +1,12 @@
-/* public/style.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #1B2838;
     margin: 0;
     padding: 0;
+}
+
+body a {
+    text-decoration: none;
 }
 
 #jogos-container {
@@ -21,7 +24,7 @@ body {
 }
 
 .jogo {
-    background-color: white;
+    background-color: #171D25;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -29,18 +32,47 @@ body {
     text-align: center;
 }
 
+.jogo a {
+    color: #67C1F5;
+    text-decoration: none;
+}
+
 .jogo img {
     width: 100%;
     height: auto;
+    
     border-radius: 10px;
+    transition: 1s;
+}
+
+.jogo:hover {
+    background-color: #C5C3C0;
+}
+
+.jogo:hover h2 {
+    transition: 1s;
+    color: transparent;
+}
+
+.jogo:hover img {
+    transform: translate3d(0%, 40%, 100px);
+}
+
+
+.jogo:hover p {
+    transform: translate3d(0%, 50%, 100px);
+    text-shadow: 3px 3px 4px #272D37;
+    
 }
 
 .jogo h2 {
     font-size: 16px;
     margin: 10px 0;
+    transition: transform 2s;
 }
 
 .jogo p {
     font-size: 14px;
-    color: #555;
+    color: #ffffff;
+    transition: transform 1.5s;
 }

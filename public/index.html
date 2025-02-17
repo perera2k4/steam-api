@@ -1,4 +1,3 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -9,7 +8,7 @@
 </head>
 <body>
     <div id="jogos-container">
-        <h1>Jogos Mais Jogados na Steam</h1>
+        <h1></h1>
         <div id="jogos-list"></div>
     </div>
 
@@ -23,11 +22,17 @@
                 const jogoDiv = document.createElement('div');
                 jogoDiv.classList.add('jogo');
 
+                // Construindo a URL do Steam para cada jogo
+                const steamUrl = `https://store.steampowered.com/app/${jogo.appid}`;
+
                 // Usando a chave 'name' para acessar o nome dos jogos
                 jogoDiv.innerHTML = `
-                    <img src="https://steamcdn-a.akamaihd.net/steam/apps/${jogo.appid}/header.jpg" alt="${jogo.name}">
-                    <h2>${jogo.rank}. ${jogo.name}</h2>
-                    <p>Pico de jogadores: ${jogo.peak_in_game}</p>
+                    <a href="${steamUrl}" target="_blank">
+                        <img src="https://steamcdn-a.akamaihd.net/steam/apps/${jogo.appid}/header.jpg" alt="${jogo.name}">
+                        <h2>${jogo.rank}. ${jogo.name}</h2>
+                        <p>Jogando agora: ${jogo.players_online}</p> <!-- Exibe jogadores online -->
+                        <p>Pico de jogadores: ${jogo.peak_in_game}</p>
+                    </a>
                 `;
                 
                 jogosContainer.appendChild(jogoDiv);
