@@ -1,0 +1,39 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogos Mais Jogados</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="jogos-container">
+        <h1>Jogos Mais Jogados na Steam</h1>
+        <div id="jogos-list"></div>
+    </div>
+
+    <script>
+        async function fetchJogos() {
+            const response = await fetch('/api/jogos');
+            const jogos = await response.json();
+            const jogosContainer = document.getElementById('jogos-list');
+            
+            jogos.forEach(jogo => {
+                const jogoDiv = document.createElement('div');
+                jogoDiv.classList.add('jogo');
+
+                jogoDiv.innerHTML = `
+                    <img src="https://steamcdn-a.akamaihd.net/steam/apps/${jogo.appid}/header.jpg" alt="${jogo.name}">
+                    <h2>${jogo.rank}. ${jogo.name}</h2>
+                    <p>Pico de jogadores: ${jogo.peak_in_game}</p>
+                `;
+                
+                jogosContainer.appendChild(jogoDiv);
+            });
+        }
+
+        fetchJogos();
+    </script>
+</body>
+</html>
