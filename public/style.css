@@ -9,8 +9,44 @@ body a {
     text-decoration: none;
 }
 
+.cabecalho {
+    font-family: 'Consolas';
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: #171D25;
+    color: #FFFFFF;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.cabecalho a {
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+}
+
+.cabecalho:hover {
+    text-decoration: none;
+    background-color: white;
+    color: #171D25;
+    font-size: 12px;
+}
+
+.cabecalho:hover a{
+    text-decoration: none;
+    background-color: white;
+    color: #171D25;
+    font-size: 12px;
+}
+
 #jogos-container {
-    max-width: 1300px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
@@ -97,10 +133,10 @@ body a {
 }
 
 .rodape i {
-    transition: transform 0.2s;
+    transition: 0.2s;
 }
 
 .rodape i:hover {
-    transform: scale(1.2);
+    transform: scale(1.5);
     color: #67CBFD;
 }
