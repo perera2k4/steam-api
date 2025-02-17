@@ -9,8 +9,37 @@ body a {
     text-decoration: none;
 }
 
+.criador {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    box-shadow: 0 4px 6px #171D25;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    text-decoration: none;
+} 
+
+.criador a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
+.criador i {
+    transition: transform 0.2s;
+}
+
+.criador i:hover {
+    transform: scale(1.2);
+    color: #67CBFD;
+}
+
 #jogos-container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
@@ -40,7 +69,6 @@ body a {
 .jogo img {
     width: 100%;
     height: auto;
-    
     border-radius: 10px;
     transition: 1s;
 }
@@ -58,11 +86,9 @@ body a {
     transform: translate3d(0%, 40%, 100px);
 }
 
-
 .jogo:hover p {
     transform: translate3d(0%, 50%, 100px);
     text-shadow: 3px 3px 4px #272D37;
-    
 }
 
 .jogo h2 {
