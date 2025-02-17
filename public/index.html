@@ -23,6 +23,7 @@
                 const jogoDiv = document.createElement('div');
                 jogoDiv.classList.add('jogo');
 
+                // Usando a chave 'name' para acessar o nome dos jogos
                 jogoDiv.innerHTML = `
                     <img src="https://steamcdn-a.akamaihd.net/steam/apps/${jogo.appid}/header.jpg" alt="${jogo.name}">
                     <h2>${jogo.rank}. ${jogo.name}</h2>
