@@ -39,6 +39,22 @@ async function getPlayersOnline(appid) {
     }
 }
 
+// Função para obter detalhes de um jogo com base no appid
+async function getGameDetails(appid) {
+    const GAME_DETAILS_URL = `https://store.steampowered.com/api/appdetails?appids=${appid}`;
+    try {
+        const response = await axios.get(GAME_DETAILS_URL);
+        if (response.data[appid] && response.data[appid].success) {
+            return response.data[appid].data.name;
+        } else {
+            return null; // Caso o nome não seja encontrado
+        }
+    } catch (error) {
+        console.error(`Erro ao obter detalhes do jogo ${appid}:`, error);
+        return null;
+    }
+}
+
 // Rota para obter os jogos mais jogados
 app.get('/api/jogos', async (req, res) => {
     try {
@@ -58,11 +74,18 @@ app.get('/api/jogos', async (req, res) => {
         // Combina os dados dos jogos mais jogados com seus nomes, pico de jogadores e jogadores online
         const jogosComNomes = await Promise.all(jogosMaisJogados.map(async (jogo) => {
             const jogoDetalhado = listaJogos.find(jogoLista => jogoLista.appid === jogo.appid);
+            let nomeJogo = jogoDetalhado ? jogoDetalhado.name : 'Nome não encontrado';
+
+            // Se o nome não foi encontrado, tenta buscar na Steam diretamente
+            if (nomeJogo === 'Nome não encontrado') {
+                nomeJogo = await getGameDetails(jogo.appid) || 'Nome não encontrado';
+            }
+
             const playersOnline = await getPlayersOnline(jogo.appid); // Obtém jogadores online em tempo real
 
             return {
                 rank: jogo.rank,
-                name: jogoDetalhado ? jogoDetalhado.name : 'Nome não encontrado',
+                name: nomeJogo,
                 peak_in_game: jogo.peak_in_game, // Número de jogadores no pico
                 players_online: playersOnline,  // Número de jogadores online no momento
                 appid: jogo.appid
