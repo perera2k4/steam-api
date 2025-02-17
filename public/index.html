@@ -31,7 +31,7 @@
 
     <script>
         async function fetchJogos() {
-            const response = await fetch('/api/jogos');
+            const response = await fetch('https://most-played-steam-games.vercel.app/api/jogos');
             const jogos = await response.json();
             const jogosContainer = document.getElementById('jogos-list');
             
