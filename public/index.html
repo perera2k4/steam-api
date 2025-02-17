@@ -46,10 +46,8 @@
                 const jogoDiv = document.createElement('div');
                 jogoDiv.classList.add('jogo');
 
-                // Construindo a URL do Steam para cada jogo
                 const steamUrl = `https://store.steampowered.com/app/${jogo.appid}`;
 
-                // Usando a chave 'name' para acessar o nome dos jogos
                 jogoDiv.innerHTML = `
                     <a href="${steamUrl}" target="_blank">
                         <img src="https://steamcdn-a.akamaihd.net/steam/apps/${jogo.appid}/header.jpg" alt="${jogo.name}">
